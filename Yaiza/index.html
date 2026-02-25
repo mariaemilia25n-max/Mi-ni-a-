@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Yaiza 💜</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #c084fc, #6b21a8);
+    font-family:'Segoe UI', sans-serif;
+    overflow:hidden;
+}
+
+/* TARJETA */
+.card{
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    padding:50px;
+    border-radius:35px;
+    width:480px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 60px rgba(0,0,0,0.4);
+    z-index:2;
+}
+
+/* FLIP FOTO */
+.flip-container{
+    perspective:1000px;
+    width:170px;
+    height:170px;
+    margin:20px auto;
+}
+
+.flip-card{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 0.8s;
+    cursor:pointer;
+}
+
+.flip-container:hover .flip-card{
+    transform:rotateY(180deg);
+}
+
+.front, .back{
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    backface-visibility:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    border:4px solid white;
+}
+
+.front img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.back{
+    background:white;
+    color:#6b21a8;
+    transform:rotateY(180deg);
+    flex-direction:column;
+    padding:15px;
+    font-size:12px;
+    text-align:center;
+}
+
+.back img{
+    width:70px;
+    margin-bottom:8px;
+}
+
+/* BOTON */
+button{
+    margin-top:20px;
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    background:#e9d5ff;
+    color:#4c1d95;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:bold;
+}
+
+button:hover{
+    background:white;
+    transform:scale(1.08);
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:3;
+}
+
+.modal-content{
+    background:white;
+    color:#6b21a8;
+    padding:40px;
+    border-radius:25px;
+    width:400px;
+    text-align:center;
+    line-height:1.7;
+}
+
+/* PATITAS */
+.patita{
+    position:fixed;
+    font-size:25px;
+    animation: flotar linear infinite;
+    opacity:0.3;
+    z-index:1;
+}
+
+@keyframes flotar{
+    0%{transform:translateY(100vh); opacity:0;}
+    30%{opacity:0.5;}
+    100%{transform:translateY(-10vh); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Feliz Cumpleaños Guapa 💜</h1>
+
+    <div class="flip-container">
+        <div class="flip-card">
+            <div class="front">
+                <img src="foto.jpg">
+            </div>
+            <div class="back">
+                <img src="jd.jpg">
+                <p>
+                Y como no puedo estar ahí físicamente contigo…  
+                te mando un JD Pantoja pa ti solita 😌💜
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <p>Pasa el mouse sobre la foto 👀</p>
+
+    <button onclick="abrirModal()">Leer 💌</button>
+</div>
+
+<div id="modal" class="modal" onclick="cerrarModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <p id="mensajeTexto"></p>
+    <button onclick="siguienteMensaje()">Siguiente 💜</button>
+  </div>
+</div>
+
+<script>
+let mensajes = [
+`Feliz cumpleaños mi guapa preciosa 💜  
+Gracias por existir y por ser esa persona tan especial en mi vida.`,
+
+`Recuerdo cuando casi no hablábamos mucho.
+Te veía muchas veces en silencio.
+Pero poco a poco fuiste abriendo tu ser,
+y eso cambió mi vida.
+Me gusta verte reír,
+me gusta cuando sonríes,
+me gusta cuando te enojas (da risa pero miedito jajaja),
+y me gusta simplemente que seas tú.`,
+
+`Gracias por cada momento,
+por cada risa,
+por cada abrazo.
+Eres de las personas más importantes en mi vida
+y siempre voy a estar para ti 💜`
+];
+
+let indice = 0;
+
+function abrirModal(){
+    document.getElementById("modal").style.display="flex";
+    indice = 0;
+    document.getElementById("mensajeTexto").innerText = mensajes[indice];
+}
+
+function siguienteMensaje(){
+    indice++;
+    if(indice < mensajes.length){
+        document.getElementById("mensajeTexto").innerText = mensajes[indice];
+    } else {
+        cerrarModal();
+    }
+}
+
+function cerrarModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+function crearPatita(){
+    const patita = document.createElement("div");
+    patita.classList.add("patita");
+    patita.innerHTML="🐾";
+    patita.style.left=Math.random()*100+"vw";
+    patita.style.animationDuration=(Math.random()*5+5)+"s";
+    document.body.appendChild(patita);
+
+    setTimeout(()=>{patita.remove();},8000);
+}
+
+setInterval(crearPatita,800);
+</script>
+
+</body>
+</html>
